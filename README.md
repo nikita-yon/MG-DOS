@@ -1,6 +1,9 @@
 Module Installation Guide for MG-DOS Project
 MG-DOS is an operating system project developed in the Python programming language. The project uses several third-party modules that must be installed before using MG-DOS.
 
+before installing modules you need to sure that you have latest version of python installed on youre computer
+and you need to add "pip" to path
+
 Installing Modules Manually
 Follow these steps to install modules manually:
 
@@ -36,7 +39,14 @@ pip install keyboard
 pip install psutil
 pip install deep_translator
 pip install pytimedinput
-REM Add any other modules you need for your MG-DOS project
+REM Проверка статуса установки модулей
+if %errorlevel% equ 0 (
+    echo Модули успешно установлены!
+) else (
+    echo Ошибка установки модулей. Проверьте, что у вас установлен Python и pip и повторите попытку.
+)
+
+pause
 ```
 Save the file and name it, for example, install_modules.bat.
 Running the .bat file
