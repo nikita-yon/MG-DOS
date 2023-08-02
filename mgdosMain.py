@@ -21,6 +21,7 @@ import webbrowser
 import keyboard as keyb
 import operator
 import psutil
+import random
 import platform
 import re
 from datetime import datetime
@@ -36,7 +37,10 @@ import winsound
 import threading
 import itertools
 import time 
-
+from pytimedinput import timedInput
+from random import randint
+import os
+from colorama import Fore, init
 
 import random
 
@@ -430,6 +434,7 @@ def openn1():
         print("MG-DOS Version 1.4_08")
         print("(c) Mistikal Green studio (MG Electron Corporation). All rights reserved.")
         print("Type 'help' to more commands.")
+        print()
 
 
 
@@ -601,13 +606,13 @@ def allcommand():
 
 
 
-            word = input(">>>")
+            word = input(f"{os.getcwd()}>").lower()
             history.append(word)
 
 
             if word == "help":
                 print(f"to check a specific command type HELP <command name>")
-                print(f"write [filename]                 write to txt file              ")
+                print(f"write [filename] [content]       write to txt file              ")
                 print(f"clear, cls                       clear the console          ")
                 print(f"reboot                           restarts MG-DOS      ")
                 print(f"cipher                           decrypt & encrypt any text")                          
@@ -624,12 +629,18 @@ def allcommand():
                 print(f"mktxt [filename.extension]       make any extension file    ")
                 print(f"run [filename.extension]         run script files")
                 print(f"delete [any files]               delete any type of files")
+                print(f"cd [directory]                   delete any type of files")
+                print(f"pause                            pauses MG-DOS")
+                print(f"exit                             exit MG-DOS")
+                print(f"save                             saves MG-DOS command history")
+
             
             def press_any_key():
                 print("Press any key to continue . . .")
                 msvcrt.getch()
                 print()
 
+            per = "\ n"
 
             if word == "break":
                 exit()
@@ -641,7 +652,7 @@ def allcommand():
                     if xtx == "help":
                         print("usage: help [command] 'see command usage'")
                     if xtx == "write":
-                        print("usage: write [any text] 'message to console'")
+                        print(f"usage: write [filename.extension] [content] 'write to file {per} - move line example = hello{per}world'")
                     if xtx == "clear":
                         print("usage: clear or cls 'to clear the console'")
                     if xtx == "reboot":
@@ -1124,35 +1135,23 @@ def allcommand():
                         print(img)
                 except Exception:
                     print("Error: Something went wrong...")
+
+
             try:
-                regex = "write ([\s\S]+)"
+
+                regex = "write ([\s\S]+) ([\s\S]+)"
                 if match := re.match(regex, word):
-                    dr123 = match.groups()[0]
-                    fileo=open(dr123, 'w')
-                    af = input("line 1>")                   
-                    af1 = input("line 2>")
-                    af2 = input("line 3>")
-                    af3 = input("line 4>")
-                    af4 = input("line 5>")
-                    af5 = input("line 6>")
-                    af6 = input("line 7>")
-                    af7 = input("line 8>")           
-                    af8 = input("line 9>")
-                    fileo.write(af+"\n")
-                    fileo.write(af1+"\n")
-                    fileo.write(af2+"\n")
-                    fileo.write(af3+"\n")
-                    fileo.write(af4+"\n")
-                    fileo.write(af5+"\n")
-                    fileo.write(af6+"\n")
-                    fileo.write(af7+"\n")
-                    fileo.write(af8+"\n")
-                    fileo.close()
-                    print("File '"+dr123+"' Successfully updated!")
+                    filename, content = match.groups()
+                    content = content.replace(r'\n', '\n')
+                    with open(filename, 'w') as file:
+                        file.write(content)
+                    print(f"File '{filename}' written successfully!")          
+
+                    
             except FileNotFoundError:
-                    print("Error: file '"+dr123+"' not found.")
+                    print("Error: file '"+filename+"' not found.")
             except Exception:
-                    print("Error: Something went wrong...")
+                    print(f"Error: {Exception}")
 
             try:
                 regex = "cd ([\s\S]+)"
@@ -1258,7 +1257,9 @@ def allcommand():
                 atexit.register(write_history_to_log, history, "log.txt")
                 break
 
-            
+            if word == "save":
+                atexit.register(write_history_to_log, history, "log.txt")
+                print("MG-DOS history saved to log.txt")
             
         ##print("Unknown command, to get help type 'help'")
                  
