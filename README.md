@@ -22,6 +22,9 @@ Setting up the .bat file
 Create a new text file in the same folder as your MG-DOS project.
 
 Open the file in a text editor and paste the following code:
+
+colorama alive-progress playsound keyboard psutil deep-translator pytimedinput
+
 ```
 @echo off
 pip install colorama
@@ -32,6 +35,7 @@ pip install playsound
 pip install keyboard
 pip install psutil
 pip install deep_translator
+pip install pytimedinput
 REM Add any other modules you need for your MG-DOS project
 ```
 Save the file and name it, for example, install_modules.bat.
